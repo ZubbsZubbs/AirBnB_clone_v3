@@ -5,7 +5,7 @@
 '''
 
 import unittest
-import pep8
+import pycodestyle
 from models.base_model import BaseModel
 from models.review import Review
 from os import getenv, remove
@@ -43,7 +43,7 @@ class TestReview(unittest.TestCase):
         '''
             Tests pep8 style
         '''
-        style = pep8.StyleGuide(quiet=True)
+        style = pycodestyle.StyleGuide(quiet=True)
         p = style.check_files(['models/review.py'])
         self.assertEqual(p.total_errors, 0, "pep8 error needs fixing")
 

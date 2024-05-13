@@ -89,18 +89,22 @@ class HBNBCommand(cmd.Cmd):
         return error
 
     def do_airbnb(self, arg):
-        """airbnb: airbnb
-        SYNOPSIS: Command changes prompt string"""
+        """
+        airbnb: airbnb
+        SYNOPSIS: Command changes prompt string
+        """
         print("                      __ ___                        ")
-        print("    _     _  _ _||\ |/  \ | _  _  _|_|_     _  _ _| ")
-        print("|_||_)\)/(_|| (_|| \|\__/ || )(_)| |_| )\)/(_|| (_| ")
+        print("|_||_)\\)/(_|| (_|| \\|\\__/ || )(_)| |_| )\\)/(_|| (_| ")
+        print("|_||_)\\)/(_|| (_|| \\|\\__/ || )(_)| |_| )\\)/(_|| (_| ")
         print("   |                                                ")
+
         if HBNBCommand.prompt == '(hbnb) ':
             HBNBCommand.prompt = " /_ /_ _  /_\n/ //_// //_/ "
         else:
             HBNBCommand.prompt = '(hbnb) '
-        arg = arg.split()
-        error = self.__class_err(arg)
+        args = arg.split()
+        if args:
+            self.__class_err(args)
 
     def do_quit(self, line):
         """quit: quit
@@ -133,12 +137,12 @@ class HBNBCommand(cmd.Cmd):
         if value.find('.') != -1:
             try:
                 value = float(value)
-            except:
+            except Exception:
                 pass
         else:
             try:
                 value = int(value)
-            except:
+            except Exception:
                 pass
         return value
 
@@ -189,30 +193,30 @@ class HBNBCommand(cmd.Cmd):
             error = self.__class_err(arg)
         if not error:
             file_storage_objs = storage.all(arg)
-            l = 0
+            le = 0
             if arg:
-                for v in file_storage_objs.values():
+                for ven in file_storage_objs.values():
                     if isinstance(arg, str):
-                        if type(v).__name__ == CNC[arg].__name__:
-                            l += 1
+                        if type(ven).__name__ == CNC[arg].__name__:
+                            le += 1
+                    else:
+                        if type(ven).__name__ == CNC[arg[0]].__name__:
+                            le += 1
+                cen = 0
+                for ven in file_storage_objs.values():
+                    if isinstance(arg, str):
+                        if type(ven).__name__ == CNC[arg].__name__:
+                            cen += 1
+                            print(ven, end=(', ' if cen < le else ''))
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
-                            l += 1
-                c = 0
-                for v in file_storage_objs.values():
-                    if isinstance(arg, str):
-                        if type(v).__name__ == CNC[arg].__name__:
-                            c += 1
-                            print(v, end=(', ' if c < l else ''))
-                    else:
-                        if type(v).__name__ == CNC[arg[0]].__name__:
-                            c += 1
-                            print(v, end=(', ' if c < l else ''))
+                            cen += 1
+                            print(ven, end=(', ' if cen < le else ''))
             else:
-                l = len(file_storage_objs)
-                c = 0
-                for v in file_storage_objs.values():
-                    print(v, end=(', ' if c < l else ''))
+                le = len(file_storage_objs)
+                cen = 0
+                for ven in file_storage_objs.values():
+                    print(ven, end=(', ' if cen < le else ''))
             print()
 
     def do_destroy(self, arg):
@@ -231,23 +235,23 @@ class HBNBCommand(cmd.Cmd):
                     del file_storage_objs[k]
                     storage.save()
 
-    def __rreplace(self, s, l):
-        for c in l:
-            s = s.replace(c, '')
-        return s
+    def __rreplace(self, se, le):
+        for ce in le:
+            se = se.replace(ce, '')
+        return se
 
     def __check_dict(self, arg):
         """checks if the arguments input has a dictionary"""
         if '{' and '}' in arg:
-            l = arg.split('{')[1]
-            l = l.split(', ')
-            l = list(s.split(':') for s in l)
-            d = {}
-            for subl in l:
-                k = subl[0].strip('"\' {}')
-                v = subl[1].strip('"\' {}')
-                d[k] = v
-            return d
+            le = arg.split('{')[1]
+            le = l.split(', ')
+            le = list(se.split(':') for se in le)
+            de = {}
+            for subl in le:
+                ke = subl[0].strip('"\' {}')
+                ve = subl[1].strip('"\' {}')
+                d[ke] = ve
+            return de
         else:
             return None
 
@@ -360,6 +364,7 @@ class HBNBCommand(cmd.Cmd):
                     v(new_arg)
                     return
         self.default(arg)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
